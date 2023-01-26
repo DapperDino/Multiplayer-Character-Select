@@ -9,9 +9,9 @@ public class CharacterDatabase : ScriptableObject
 
     public Character GetCharacterById(int id)
     {
-        foreach (var character in characters)
+        foreach(var character in characters)
         {
-            if (character.Id == id)
+            if(character.Id == id)
             {
                 return character;
             }

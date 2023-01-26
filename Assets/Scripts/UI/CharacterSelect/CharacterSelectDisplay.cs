@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterSelectDisplay : NetworkBehaviour
 {
-    [Header("References")]
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform charactersHolder;
     [SerializeField] private CharacterSelectButton selectButtonPrefab;
@@ -27,8 +26,8 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
             foreach (var character in allCharacters)
             {
-                var selectButtonInstance = Instantiate(selectButtonPrefab, charactersHolder);
-                selectButtonInstance.SetCharacter(this, character);
+                var selectbuttonInstance = Instantiate(selectButtonPrefab, charactersHolder);
+                selectbuttonInstance.SetCharacter(this, character);
             }
 
             players.OnListChanged += HandlePlayersStateChanged;
@@ -37,11 +36,11 @@ public class CharacterSelectDisplay : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnect;
+            NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnected;
 
-            foreach (NetworkClient networkClient in NetworkManager.Singleton.ConnectedClientsList)
+            foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                HandleClientConnected(networkClient.ClientId);
+                HandleClientConnected(client.ClientId);
             }
         }
     }
@@ -56,7 +55,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         if (IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnect;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnected;
         }
     }
 
@@ -65,7 +64,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
         players.Add(new CharacterSelectState(clientId));
     }
 
-    private void HandleClientDisconnect(ulong clientId)
+    private void HandleClientDisconnected(ulong clientId)
     {
         for (int i = 0; i < players.Count; i++)
         {
@@ -73,21 +72,6 @@ public class CharacterSelectDisplay : NetworkBehaviour
             {
                 players.RemoveAt(i);
                 break;
-            }
-        }
-    }
-
-    private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> playersState)
-    {
-        for (int i = 0; i < playerCards.Length; i++)
-        {
-            if (players.Count > i)
-            {
-                playerCards[i].UpdateDisplay(players[i]);
-            }
-            else
-            {
-                playerCards[i].DisableDisplay();
             }
         }
     }
@@ -112,6 +96,21 @@ public class CharacterSelectDisplay : NetworkBehaviour
                     players[i].ClientId,
                     characterId
                 );
+            }
+        }
+    }
+
+    private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)
+    {
+        for (int i = 0; i < playerCards.Length; i++)
+        {
+            if (players.Count > i)
+            {
+                playerCards[i].UpdateDisplay(players[i]);
+            }
+            else
+            {
+                playerCards[i].DisableDisplay();
             }
         }
     }
