@@ -1,2 +1,2 @@
-# Multiplayer-Character-Select
-Repo for my Unity Multiplayer Character Select Tutorials
+# Netcode-for-GameObjects-Template
+Project to use as a base when creating tutorials using Unity's Netcode for GameObjects framework
