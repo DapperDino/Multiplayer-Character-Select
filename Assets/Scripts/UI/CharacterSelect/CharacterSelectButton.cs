@@ -9,15 +9,15 @@ public class CharacterSelectButton : MonoBehaviour
 
     private CharacterSelectDisplay characterSelect;
 
-    public bool IsDisabled { get; private set; }
     public Character Character { get; private set; }
+    public bool IsDisabled { get; private set; }
 
     public void SetCharacter(CharacterSelectDisplay characterSelect, Character character)
     {
         iconImage.sprite = character.Icon;
 
         this.characterSelect = characterSelect;
-
+        
         Character = character;
     }
 

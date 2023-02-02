@@ -117,6 +117,10 @@ public class CharacterSelectDisplay : NetworkBehaviour
         {
             if (players[i].ClientId != serverRpcParams.Receive.SenderClientId) { continue; }
 
+            if (!characterDatabase.IsValidCharacterId(characterId)) { return; }
+
+            if (IsCharacterTaken(characterId, true)) { return; }
+
             players[i] = new CharacterSelectState(
                 players[i].ClientId,
                 characterId,
@@ -147,18 +151,6 @@ public class CharacterSelectDisplay : NetworkBehaviour
                 true
             );
         }
-
-        foreach (var player in players)
-        {
-            if (!player.IsLockedIn) { return; }
-        }
-
-        Debug.Log("All players locked in");
-
-        foreach (var player in players)
-        {
-            Debug.Log($"Player {player.ClientId}: {characterDatabase.GetCharacterById(player.CharacterId).DisplayName}");
-        }
     }
 
     private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)
@@ -185,33 +177,35 @@ public class CharacterSelectDisplay : NetworkBehaviour
             }
         }
 
-        for (int i = 0; i < players.Count; i++)
+        foreach (var player in players)
         {
-            if (players[i].ClientId != NetworkManager.Singleton.LocalClientId) { continue; }
+            if (player.ClientId != NetworkManager.Singleton.LocalClientId) { continue; }
 
-            if (players[i].IsLockedIn)
+            if (player.IsLockedIn)
             {
                 lockInButton.interactable = false;
                 break;
             }
 
-            if (IsCharacterTaken(players[i].CharacterId, false))
+            if (IsCharacterTaken(player.CharacterId, false))
             {
                 lockInButton.interactable = false;
                 break;
             }
 
             lockInButton.interactable = true;
+
+            break;
         }
     }
 
-    public bool IsCharacterTaken(int characterId, bool checkAll)
+    private bool IsCharacterTaken(int characterId, bool checkAll)
     {
         for (int i = 0; i < players.Count; i++)
         {
             if (!checkAll)
             {
-                if (players[i].ClientId == NetworkManager.LocalClientId) { continue; }
+                if (players[i].ClientId == NetworkManager.Singleton.LocalClientId) { continue; }
             }
 
             if (players[i].IsLockedIn && players[i].CharacterId == characterId)
