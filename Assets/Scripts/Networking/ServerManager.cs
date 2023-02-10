@@ -10,16 +10,16 @@ public class ServerManager : MonoBehaviour
     [SerializeField] private string characterSelectSceneName = "CharacterSelect";
     [SerializeField] private string gameplaySceneName = "Gameplay";
 
+    public static ServerManager Instance { get; private set; }
+
     private bool gameHasStarted;
     public Dictionary<ulong, ClientData> ClientData { get; private set; }
-
-    public static ServerManager Instance { get; private set; }
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
