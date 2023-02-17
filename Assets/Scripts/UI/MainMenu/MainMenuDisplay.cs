@@ -1,20 +1,44 @@
+using System;
+using TMPro;
 using Unity.Netcode;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using UnityEngine;
 
 public class MainMenuDisplay : MonoBehaviour
 {
-    public void StartHost()
+    [Header("References")]
+    [SerializeField] private GameObject connectingPanel;
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private TMP_InputField joinCodeInputField;
+
+    private async void Start()
     {
-        ServerManager.Instance.StartHost();
+        try
+        {
+            await UnityServices.InitializeAsync();
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            Debug.Log($"Player Id: {AuthenticationService.Instance.PlayerId}");
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return;
+        }
+
+        connectingPanel.SetActive(false);
+        menuPanel.SetActive(true);
     }
 
-    public void StartServer()
+    public void StartHost()
     {
-        ServerManager.Instance.StartServer();
+        HostManager.Instance.StartHost();
     }
 
     public void StartClient()
     {
-        NetworkManager.Singleton.StartClient();
+        ClientManager.Instance.StartClient(joinCodeInputField.text);
     }
 }
