@@ -53,7 +53,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
             }
         }
 
-        if (IsHost)
+        if(IsHost)
         {
             joinCodeText.text = HostManager.Instance.JoinCode;
         }

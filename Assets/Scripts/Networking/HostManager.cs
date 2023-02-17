@@ -57,7 +57,7 @@ public class HostManager : MonoBehaviour
         }
         catch
         {
-            Debug.LogError("Relay create join code request failed");
+            Debug.LogError("Relay get join code request failed");
             throw;
         }
 

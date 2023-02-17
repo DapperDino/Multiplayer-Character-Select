@@ -24,7 +24,7 @@ public class MainMenuDisplay : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.LogError(e);
             return;
         }
 
