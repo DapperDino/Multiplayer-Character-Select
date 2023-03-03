@@ -5,6 +5,7 @@
     "com.unity.inputsystem": "1.5.0",
     "com.unity.netcode.gameobjects": "1.2.0",
     "com.unity.render-pipelines.universal": "14.0.6",
+    "com.unity.services.lobby": "1.0.3",
     "com.unity.services.relay": "1.0.5",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.4",
