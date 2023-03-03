@@ -75,20 +75,20 @@ public class HostManager : MonoBehaviour
             var createLobbyOptions = new CreateLobbyOptions();
             createLobbyOptions.IsPrivate = false;
             createLobbyOptions.Data = new Dictionary<string, DataObject>()
+            {
                 {
-                    {
-                        "JoinCode", new DataObject(
-                            visibility: DataObject.VisibilityOptions.Member,
-                            value: JoinCode
-                        )
-                    }
-                };
+                    "JoinCode", new DataObject(
+                        visibility: DataObject.VisibilityOptions.Member,
+                        value: JoinCode
+                    )
+                }
+            };
 
             Lobby lobby = await Lobbies.Instance.CreateLobbyAsync("My Lobby", maxConnections, createLobbyOptions);
             lobbyId = lobby.Id;
             StartCoroutine(HeartbeatLobbyCoroutine(15));
         }
-        catch (LobbyServiceException e)
+        catch(LobbyServiceException e)
         {
             Debug.Log(e);
             throw;
@@ -104,8 +104,8 @@ public class HostManager : MonoBehaviour
 
     private IEnumerator HeartbeatLobbyCoroutine(float waitTimeSeconds)
     {
-        var delay = new WaitForSecondsRealtime(waitTimeSeconds);
-        while (true)
+        var delay = new WaitForSeconds(waitTimeSeconds);
+        while(true)
         {
             Lobbies.Instance.SendHeartbeatPingAsync(lobbyId);
             yield return delay;

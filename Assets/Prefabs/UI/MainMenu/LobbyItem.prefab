@@ -526,7 +526,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6832998350415404247}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2621454767557284695}
+        m_TargetAssemblyTypeName: LobbyItem, Assembly-CSharp
+        m_MethodName: Join
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8135198271120477636
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,5 +631,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de0eb36ba7c6dd44a488d7f29a5d1e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyNameText: {fileID: 0}
-  lobbyPlayersText: {fileID: 0}
+  lobbyNameText: {fileID: 444961988065539902}
+  lobbyPlayersText: {fileID: 8234214370401153576}

@@ -37,8 +37,8 @@ public class MainMenuDisplay : MonoBehaviour
         HostManager.Instance.StartHost();
     }
 
-    public void StartClient()
+    public async void StartClient()
     {
-        ClientManager.Instance.StartClient(joinCodeInputField.text);
+        await ClientManager.Instance.StartClient(joinCodeInputField.text);
     }
 }

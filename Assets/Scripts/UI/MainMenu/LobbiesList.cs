@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -5,7 +6,6 @@ using UnityEngine;
 
 public class LobbiesList : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private Transform lobbyItemParent;
     [SerializeField] private LobbyItem lobbyItemPrefab;
 
@@ -25,22 +25,22 @@ public class LobbiesList : MonoBehaviour
 
         try
         {
-            QueryLobbiesOptions options = new QueryLobbiesOptions();
+            var options = new QueryLobbiesOptions();
             options.Count = 25;
 
             options.Filters = new List<QueryFilter>()
-                {
-                    new QueryFilter(
-                        field: QueryFilter.FieldOptions.AvailableSlots,
-                        op: QueryFilter.OpOptions.GT,
-                        value: "0"),
-                    new QueryFilter(
-                        field: QueryFilter.FieldOptions.IsLocked,
-                        op: QueryFilter.OpOptions.EQ,
-                        value: "0")
-                };
+            {
+                new QueryFilter(
+                    field: QueryFilter.FieldOptions.AvailableSlots,
+                    op: QueryFilter.OpOptions.GT,
+                    value: "0"),
+                new QueryFilter(
+                    field: QueryFilter.FieldOptions.IsLocked,
+                    op: QueryFilter.OpOptions.EQ,
+                    value: "0")
+            };
 
-            QueryResponse lobbies = await Lobbies.Instance.QueryLobbiesAsync(options);
+            var lobbies = await Lobbies.Instance.QueryLobbiesAsync(options);
 
             foreach (Transform child in lobbyItemParent)
             {
@@ -49,13 +49,15 @@ public class LobbiesList : MonoBehaviour
 
             foreach (Lobby lobby in lobbies.Results)
             {
-                LobbyItem lobbyItemInstance = Instantiate(lobbyItemPrefab, lobbyItemParent);
-                lobbyItemInstance.Initialise(this, lobby);
+                var lobbyInstance = Instantiate(lobbyItemPrefab, lobbyItemParent);
+                lobbyInstance.Initialise(this, lobby);
             }
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+            isRefreshing = false;
+            throw;
         }
 
         isRefreshing = false;
@@ -69,7 +71,7 @@ public class LobbiesList : MonoBehaviour
 
         try
         {
-            Lobby joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobby.Id);
+            var joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobby.Id);
             string joinCode = joiningLobby.Data["JoinCode"].Value;
 
             await ClientManager.Instance.StartClient(joinCode);
@@ -77,6 +79,8 @@ public class LobbiesList : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+            isJoining = false;
+            throw;
         }
 
         isJoining = false;

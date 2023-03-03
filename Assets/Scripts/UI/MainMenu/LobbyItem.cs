@@ -1,10 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class LobbyItem : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private TMP_Text lobbyNameText;
     [SerializeField] private TMP_Text lobbyPlayersText;
 
