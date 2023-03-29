@@ -74,7 +74,7 @@ public class LobbiesList : MonoBehaviour
             var joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobby.Id);
             string joinCode = joiningLobby.Data["JoinCode"].Value;
 
-            await ClientManager.Instance.StartClient(joinCode);
+            await ClientSingleton.Instance.Manager.BeginConnection(joinCode);
         }
         catch (LobbyServiceException e)
         {

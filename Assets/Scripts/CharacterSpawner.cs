@@ -12,7 +12,7 @@ public class CharacterSpawner : NetworkBehaviour
     {
         if (!IsServer) { return; }
 
-        foreach (var client in HostManager.Instance.ClientData)
+        foreach (var client in MatchplayNetworkServer.Instance.ClientData)
         {
             var character = characterDatabase.GetCharacterById(client.Value.characterId);
             if (character != null)

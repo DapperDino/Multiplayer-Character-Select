@@ -53,9 +53,9 @@ public class CharacterSelectDisplay : NetworkBehaviour
             }
         }
 
-        if(IsHost)
+        if (IsHost)
         {
-            joinCodeText.text = HostManager.Instance.JoinCode;
+            joinCodeText.text = HostSingleton.Instance.RelayHostData.JoinCode;
         }
     }
 
@@ -165,10 +165,10 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
         foreach (var player in players)
         {
-            HostManager.Instance.SetCharacter(player.ClientId, player.CharacterId);
+            MatchplayNetworkServer.Instance.SetCharacter(player.ClientId, player.CharacterId);
         }
 
-        HostManager.Instance.StartGame();
+        MatchplayNetworkServer.Instance.StartGame();
     }
 
     private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)

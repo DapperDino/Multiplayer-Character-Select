@@ -244,6 +244,7 @@ PlayerSettings:
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
+  useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 1
   AndroidTargetDevices: 0
@@ -878,7 +879,7 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: adef9c7c-76d1-4337-afb4-73a179599a25
+  cloudProjectId: 31cbe1e1-ef15-4249-8b02-1ae7cd77e025
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Multiplayer-Character-Select
